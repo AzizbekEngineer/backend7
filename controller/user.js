@@ -68,47 +68,47 @@ class UsersController {
       });
     }
   }
-  //   async register(req, res) {
-  //     try {
-  //       const { username, password } = req.body;
-  //       const user = await Users.findOne({ username });
+  async register(req, res) {
+    try {
+      const { username, password } = req.body;
+      const user = await Users.findOne({ username });
 
-  //       if (!user) {
-  //         return res.status(400).json({
-  //           msg: "username xato ",
-  //           variant: "error",
-  //           payload: null,
-  //         });
-  //       }
+      if (!user) {
+        return res.status(400).json({
+          msg: "username xato ",
+          variant: "error",
+          payload: null,
+        });
+      }
 
-  //       bcrypt.compare(password, user.password, function (err, response) {
-  //         const token = jwt.sign(
-  //           { _id: user._id, role: "admin" },
-  //           process.env.SECRET_KEY
-  //         );
-  //         if (response) {
-  //           res.status(200).json({
-  //             msg: "Log in ",
-  //             variant: "success",
-  //             payload: user,
-  //             token,
-  //           });
-  //         } else {
-  //           return res.status(400).json({
-  //             msg: "password is wrong",
-  //             variant: "error",
-  //             payload: null,
-  //           });
-  //         }
-  //       });
-  //     } catch {
-  //       res.status(500).json({
-  //         msg: "Server error",
-  //         variant: "error",
-  //         payload: null,
-  //       });
-  //     }
-  //   }
+      bcrypt.compare(password, user.password, function (err, response) {
+        const token = jwt.sign(
+          { _id: user._id, role: "admin" },
+          process.env.SECRET_KEY
+        );
+        if (response) {
+          res.status(200).json({
+            msg: "Log in ",
+            variant: "success",
+            payload: user,
+            token,
+          });
+        } else {
+          return res.status(400).json({
+            msg: "password is wrong",
+            variant: "error",
+            payload: null,
+          });
+        }
+      });
+    } catch {
+      res.status(500).json({
+        msg: "Server error",
+        variant: "error",
+        payload: null,
+      });
+    }
+  }
   async delete(req, res) {
     try {
       const { id } = req.params;

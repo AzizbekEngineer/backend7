@@ -10,7 +10,7 @@ router.post("/api/blogs", BlogsController.create);
 
 router.get("/api/users", UsersController.get);
 router.post("/api/users/sign-up", UsersController.create);
-// router.post("/api/users/sign-in", UsersController.register);
+router.post("/api/users/sign-in", UsersController.register);
 router.delete("/api/users/:id", UsersController.delete);
 router.put("/api/users/:id", UsersController.update);
 
