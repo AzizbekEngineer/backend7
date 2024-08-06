@@ -1,4 +1,5 @@
-import { Blogs, validation } from "../modules/blogSchema.js";
+import { Blogs, validateBlog } from "../modules/blogSchema.js";
+
 class BlogsController {
   async get(req, res) {
     try {
@@ -11,12 +12,12 @@ class BlogsController {
         });
       }
       res.status(200).json({
-        msg: "All Blog",
+        msg: "All Blogs",
         variant: "success",
         payload: blogs,
       });
     } catch {
-      res.status(400).json({
+      res.status(500).json({
         msg: "Server error",
         variant: "error",
         payload: null,
@@ -25,7 +26,7 @@ class BlogsController {
   }
   async create(req, res) {
     try {
-      const { error } = validation(req.body);
+      const { error } = validateBlog(req.body);
       if (error) {
         return res.status(400).json({
           msg: error.details[0].message,
@@ -33,9 +34,10 @@ class BlogsController {
           payload: null,
         });
       }
-      const blog = await Blogs.find();
+      const blog = await Blogs.create(req.body);
       res.status(201).json({
         msg: "Blog is created",
+
         variant: "success",
         payload: blog,
       });

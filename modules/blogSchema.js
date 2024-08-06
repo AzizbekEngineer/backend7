@@ -1,4 +1,5 @@
-import { Schema, Types, model } from "mongoose";
+import { Schema, model } from "mongoose";
+import Joi from "joi";
 
 const blogSchema = new Schema(
   {
@@ -20,11 +21,11 @@ const blogSchema = new Schema(
 
 export const Blogs = model("blog", blogSchema);
 
-export const validation = (body) => {
+export const validateBlog = (body) => {
   const schema = Joi.object({
-    title: Joi.String().required(),
-    desc: Joi.String().required(),
-    userId: Joi.String().required(),
+    title: Joi.string().required(),
+    desc: Joi.string().required(),
+    userId: Joi.string().required(),
   });
-  return schema.validation(body);
+  return schema.validate(body);
 };
